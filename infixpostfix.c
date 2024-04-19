@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include<stdlib.h>
 #define MAX 100
 
 char stack[MAX];
@@ -7,7 +8,6 @@ char postfix[MAX];
 int top=-1;
 
 
-void infixtopostfix( )
 
 void push(char x)
 {	 
@@ -18,7 +18,7 @@ void push(char x)
 	}
 	else 
 	top++;
-	stack[top]=a;
+	stack[top]=x;
 }
 
 
@@ -29,8 +29,8 @@ void pop(char x)
 		printf("stack is over flow");
 		exit(1);
 	}
-	x=stack[top]
-	top++
+	x=stack[top];
+	top++;
 	return x;
 }
 int precedance(char x)
@@ -47,8 +47,8 @@ int precedance(char x)
 
 void print()
 {
-	int i;'
-	for(i=0;postfix[i]!='10';i++)
+	int i;
+	for(i=0;postfix[i]!='\0';i++)
 	printf("%c",postfix[i]);
 	return;
 }
@@ -60,6 +60,52 @@ int isempty()
 	else 
 	return 0;
 }
+
+void infixtopostfix()
+{
+	int i,j=0;
+	char symbol,next;
+	for(i=0;infix[i]!='\0';i++)
+	symbol=infix[i];
+	if(symbol=='(')
+	push(symbol);
+	else if (symbol==')')
+	{	
+		while(next=pop(1)!='(')
+		{
+		postfix[j++]=next;
+		}
+	}
+	else if (symbol=='+'||symbol=='-'||symbol=='*'||symbol=='/'||symbol=='^')
+	{
+		while((!isempty)&&(precedance(stack[top]>=precedance(stack))))
+		{
+			postfix[j++]=pop();
+			push(symbol);
+		}
+	}
+	else
+	{	
+		postfix[j++]=symbol;
 	
+	while(!isempty())
+	{
+		postfix[j++]=pop();
+		postfix[j]='\0';
+	}
+	}
+}
+int main()
+{
+	printf("enter the infix expression");
+	scanf("%s",&infix[100]);
+	infixtopostfix();                               
+	print();
+}
+
+
+
+
+
 
 
